@@ -42,21 +42,27 @@ print(f'number of rooms: {len(world.rooms)}')
 visited = {}
 while len(world.rooms) > len(visited):
     # if room not visited
+    id = player.current_room.id
     if player.current_room.id not in visited:
         # added as visited
-        id = player.current_room.id
+        
         visited[id] = {}
         edges = player.current_room.get_exits()
-        print(f'edges:{edges}')
+        # print(f'edges:{edges}')
         for i in range(len(edges)):
-            print(f'edges:{edges}')
             visited[id][edges[i]] = '?'
             visited[id][edges[i]] = edges[i]
-            
+    if len(visited[id]) > 0:
+        # print(visited[id])
+        next_move = player.current_room.get_exits()[0]
+        if next_move != None:
+            # print(f'next_move:{next_move}')
+            player.travel(next_move)
+            traversal_path.append(next_move)
 
-           
 
-        print(f'visited: {visited}')
+print(f'traversal_path:{traversal_path}')
+print(f'visited: {visited}')
 
 
 
