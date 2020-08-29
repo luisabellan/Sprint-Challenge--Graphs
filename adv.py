@@ -36,11 +36,11 @@ visited = {}
 for i in range(len(world.rooms)):
     visited[i] = {} 
 # populate graph
-print(room_graph)
+# print(room_graph)
 for i in range(len(world.rooms)):
     visited[i] = room_graph[i][1:][0]
 
-print(f'visited: {visited}')
+# print(f'visited: {visited}')
 
 
 def get_neighbors(id):
@@ -48,7 +48,8 @@ def get_neighbors(id):
     neighbors = []
     for i in visited[id]:
         neighbors.append(visited[id][i])
-    print(f"neighbors: {neighbors}")
+    # print(f"neighbors: {neighbors}")
+    return neighbors
     
  
 
@@ -77,8 +78,9 @@ while stack.size() > 0:
             stack.push(neighbor_vertex)
 
 
-    print(f'stack: {stack.stack}')
-# # print(visited)
+    # print(f'stack: {stack.stack}')
+print(f'visited_verices:{visited_vertices}')
+print(f'visited:{visited}')
 
     
 
