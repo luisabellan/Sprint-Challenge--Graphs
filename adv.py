@@ -71,11 +71,6 @@ def explore ():
 
 
 
-
-
-
-
-
 """
 Print each vertex in depth-first order
 beginning from starting_room.
@@ -102,8 +97,14 @@ while stack.size() > 0:
         # push up all the current vertex's neighbors (so we can visit them next)
         def get_neighbors(room):
             neighbors = []
-            exits = room.get_exits()
-            print(f'exits: {exits}')
+            exits = []
+
+          
+            try:
+                exits = current_room.get_exits()
+            except AttributeError as error:
+                print(error)
+            # 
             for exit in exits:
                 if exit == 'n':
                     neighbors.append(room.get_room_in_direction('n').id)
@@ -114,6 +115,7 @@ while stack.size() > 0:
                 elif exit == 'e':
                     neighbors.append(room.get_room_in_direction('e').id)
             print(f'neighbors: {neighbors}')
+            print(f'exits: {exits}')
             return neighbors
 
         for neighbor_room in get_neighbors(current_room):
@@ -124,12 +126,12 @@ while stack.size() > 0:
 
 
 # print(f'traversal_path:{traversal_path}')
-print(f'graph: {graph}')
+# print(f'graph: {graph}')
 # exits = player.current_room.get_exits()
 # print(f'exits:{exits}')
-print(f'visited_rooms:{visited_rooms}')
-print(f'current_room:{player.current_room.id}')
-print(f'current_room:{current_room}')
+# print(f'visited_rooms:{visited_rooms}')
+# print(f'current_room:{player.current_room.id}')
+# print(f'current_room:{current_room}')
 
 
 # def bft(self, starting_room):
