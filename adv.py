@@ -80,6 +80,7 @@ stack = Stack()
 stack.push(player.current_room)
 # Create an empty set to track visited verticies
 visited_rooms = set()
+
 # while the stack is not empty:
 while stack.size() > 0:
     # get current vertex (pop from stack)
