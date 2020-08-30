@@ -12,9 +12,9 @@ world = World()
 
 
 # You may uncomment the smaller graphs for development and testing purposes.
-map_file = "maps/test_line.txt"
+# map_file = "maps/test_line.txt"
 # map_file = "maps/test_cross.txt"
-# map_file = "maps/test_loop.txt"
+map_file = "maps/test_loop.txt"
 # map_file = "maps/test_loop_fork.txt"
 # map_file = "maps/main_maze.txt"
 
@@ -32,16 +32,24 @@ player = Player(world.starting_room)
 traversal_path = []
 
 
-# print(f'number of rooms: {len(world.rooms)}')
-# print(player.current_room)
 
 
-# traverse the rooms
-# print(player.current_room.s_to)
-current_room = player.current_room
-print(current_room)
-room_north = player.current_room.get_room_in_direction('n')
-# print(room_north)
+
+
+# create graph 
+graph = {}
+for i in range(len(world.rooms)):
+ 
+    room = player.current_room.id
+    graph[room] = {}
+    edges = player.current_room.get_exits()
+    # print(f'edges:{edges}')
+    # populate edges values with '?' s
+    for i in range(len(edges)):
+        graph[room][edges[i]] = '?'
+        # graph[room][edges[i]] = edges[i]
+
+# print(graph)
 
 def explore ():
 
@@ -53,63 +61,90 @@ def explore ():
     print(room_south)
     print(room_east)
     print(room_west)
-    if room_north != None and room_south != None and room_south
+    
 
 
-explore()
+
+# explore()
 
 
+
+
+
+
+
+
+
+
+"""
+Print each vertex in depth-first order
+beginning from starting_room.
+"""
+# Create an empty stack and add the starting_room
+stack = Stack()
+stack.push(player.current_room)
+# Create an empty set to track visited verticies
+visited_rooms = set()
+# while the stack is not empty:
+while stack.size() > 0:
+    # get current vertex (pop from stack)
+    current_room = stack.pop()
+    # Check if the current vertex has not been visited:
+    if current_room not in visited_rooms:
+        # print the current vertex
+        # print(f'current_room: {current_room}')
+        # Mark the current vertex as visited
+        # Add the current vertex to a visited_set
+        
+        visited_rooms.add(current_room)
+
+
+        # push up all the current vertex's neighbors (so we can visit them next)
+        def get_neighbors(room):
+            neighbors = []
+            exits = room.get_exits()
+            print(f'exits: {exits}')
+            for exit in exits:
+                if exit == 'n':
+                    neighbors.append(room.get_room_in_direction('n').id)
+                elif exit == 's':
+                    neighbors.append(room.get_room_in_direction('s').id)
+                elif exit == 'w':
+                    neighbors.append(room.get_room_in_direction('w').id)
+                elif exit == 'e':
+                    neighbors.append(room.get_room_in_direction('e').id)
+            print(f'neighbors: {neighbors}')
+            return neighbors
+
+        for neighbor_room in get_neighbors(current_room):
+            stack.push(neighbor_room)
+    # print(None)
 
 
 
 
 # print(f'traversal_path:{traversal_path}')
-# print(f'visited: {visited}')
+print(f'graph: {graph}')
+# exits = player.current_room.get_exits()
+# print(f'exits:{exits}')
+print(f'visited_rooms:{visited_rooms}')
+print(f'current_room:{player.current_room.id}')
+print(f'current_room:{current_room}')
 
 
-# def dft(starting_vertex):
-#     """
-#     Print each vertex in depth-first order
-#     beginning from starting_vertex.
-#     """
-#     # Create an empty stack and add the starting_vertex
-#     stack = Stack()
-#     stack.push(starting_vertex)
-#     # Create an empty set to track visited verticies
-#     visited_vertices = set()
-#     # while the stack is not empty:
-#     while stack.size() > 0:
-#         # get current vertex (pop from stack)
-#         current_vertex = stack.pop()
-#         # Check if the current vertex has not been visited:
-#         if current_vertex not in visited_vertices:
-#             # print the current vertex
-#             print(current_vertex)
-#             # Mark the current vertex as visited
-#             # Add the current vertex to a visited_set
-#             visited_vertices.add(current_vertex)
-
-
-#             # push up all the current vertex's neighbors (so we can visit them next)
-#             # for neighbor_vertex in self.get_neighbors(current_vertex):
-#             #     stack.push(neighbor_vertex)
-
-
-#         return None
-
-# def bft(self, starting_vertex):
+# def bft(self, starting_room):
 #     """
 #     Print each vertex in breadth-first order
-#     beginning from starting_vertex.
+#     beginning from starting_room.
 #     """
-#     # Create an empty queue and enqueue the starting_vertex
+#     # Create an empty queue and enqueue the starting_room
 #     queue = Queue()
 #     queue.enqueue({
-#         'current_vertex': starting_vertex,
-#         'path': [starting_vertex]
+#         'current_room': starting_room,
+#         'path': [starting_room]
 #     })
 #     # Create an empty set to track visited verticies
-#     visited_vertices = set()
+#     visited_rooms = set()
 
 #     # while the queue is not empty:
 #     while queue.size() > 0:
@@ -118,22 +153,22 @@ explore()
 #         current_obj = queue.dequeue()
 #         current_path = current_obj['path']
 #         # set the current vertex to the LAST element of the PATH
-#         current_vertex = current_obj['current_vertex']
+#         current_room = current_obj['current_room']
 #         # Check if the current vertex has not been visited:
-#         if current_vertex not in visited_vertices:
+#         if current_room not in visited_rooms:
 #             # print the current vertex
-#             print(current_vertex)
+#             print(current_room)
 #             # Mark the current vertex as visited
 #             # Add the current vertex to a visited_set
-#             visited_vertices.add(current_vertex)
+#             visited_rooms.add(current_room)
 
 #             # queue up all the current vertex's neighbors (so we can visit them next)
-#             for neighbor_vertex in self.get_neighbors(current_vertex):
+#             for neighbor_room in self.get_neighbors(current_room):
 #                 new_path = list(current_path)
-#                 new_path.append(neighbor_vertex)
+#                 new_path.append(neighbor_room)
 
 #                 queue.enqueue({
-#                     'current_vertex': neighbor_vertex,
+#                     'current_room': neighbor_room,
 #                     'path': new_path
 #                 })
 #     return None
@@ -171,3 +206,5 @@ explore()
 #         break
 #     else:
 #         print("I did not understand that command.")
+#
+
