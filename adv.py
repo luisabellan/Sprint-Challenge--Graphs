@@ -90,31 +90,32 @@ while stack.size() > 0:
         # print(f'current_room: {current_room}')
         # Mark the current vertex as visited
         # Add the current vertex to a visited_set
-        
-        visited_rooms.add(current_room)
+        if type(current_room) == int:
+            visited_rooms.add(current_room)
 
 
         # push up all the current vertex's neighbors (so we can visit them next)
         def get_neighbors(room):
             neighbors = []
-            exits = []
+            if type(room) != int:
+                exits = room.get_exits()
 
           
-           
-            exits = current_room.get_exits()
-         
+
             
-            for exit in exits:
-                if exit == 'n':
-                    neighbors.append(room.get_room_in_direction('n').id)
-                elif exit == 's':
-                    neighbors.append(room.get_room_in_direction('s').id)
-                elif exit == 'w':
-                    neighbors.append(room.get_room_in_direction('w').id)
-                elif exit == 'e':
-                    neighbors.append(room.get_room_in_direction('e').id)
-            print(f'neighbors: {neighbors}')
-            print(f'exits: {exits}')
+                for exit in exits:
+                    if exit == 'n':
+                        neighbors.append(room.get_room_in_direction('n').id)
+                    elif exit == 's':
+                        neighbors.append(room.get_room_in_direction('s').id)
+                    elif exit == 'w':
+                        neighbors.append(room.get_room_in_direction('w').id)
+                    elif exit == 'e':
+                        neighbors.append(room.get_room_in_direction('e').id)
+
+           
+                print(f'neighbors: {neighbors}')
+                print(f'exits: {exits}')
             return neighbors
 
         for neighbor_room in get_neighbors(current_room):
@@ -128,7 +129,7 @@ while stack.size() > 0:
 # print(f'graph: {graph}')
 # exits = player.current_room.get_exits()
 # print(f'exits:{exits}')
-# print(f'visited_rooms:{visited_rooms}')
+print(f'visited_rooms:{visited_rooms}')
 # print(f'current_room:{player.current_room.id}')
 # print(f'current_room:{current_room}')
 
