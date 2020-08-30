@@ -12,11 +12,11 @@ world = World()
 
 
 # You may uncomment the smaller graphs for development and testing purposes.
-# map_file = "maps/test_line.txt"
+map_file = "maps/test_line.txt"
 # map_file = "maps/test_cross.txt"
 # map_file = "maps/test_loop.txt"
 # map_file = "maps/test_loop_fork.txt"
-map_file = "maps/main_maze.txt"
+# map_file = "maps/main_maze.txt"
 
 # Loads the map into a dictionary
 room_graph = literal_eval(open(map_file, "r").read())
@@ -100,11 +100,10 @@ while stack.size() > 0:
             exits = []
 
           
-            try:
-                exits = current_room.get_exits()
-            except AttributeError as error:
-                print(error)
-            # 
+           
+            exits = current_room.get_exits()
+         
+            
             for exit in exits:
                 if exit == 'n':
                     neighbors.append(room.get_room_in_direction('n').id)
