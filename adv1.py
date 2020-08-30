@@ -31,103 +31,46 @@ player = Player(world.starting_room)
 # traversal_path = ['n', 'n']
 traversal_path = [] 
 
-# visited[player.current_room.id] = player.current_room.get_exits()
 
-
-# print(visited)
-# player.travel('n')
-# print(player.current_room)
-# player.travel('n')
-# print(player.current_room)
 
 print(f'number of rooms: {len(world.rooms)}')
 # print(player.current_room)
 
 
 # traverse the rooms
-# while len(world.rooms) > len(visited):
-    
-#     # if room not visited
-#     if player.current_room.id not in visited:
-#         # added as visited
-#         visited[player.current_room.id] = player.current_room.get_exits()
-#         print(visited)
-#     if len(visited[player.current_room.id]) > 0:
-#         next_move = visited[player.current_room.id][0]
-#         print(next_move)
-#         player.travel(next_move)
-#         traversal_path.append(next_move)
-#         print(traversal_path)
 
-# print(traversal_path)
-
-
-# create graph
 visited = {}
 while len(world.rooms) > len(visited):
-    
     # if room not visited
+    id = player.current_room.id
     if player.current_room.id not in visited:
         # added as visited
-        visited[player.current_room.id] = player.current_room.get_exits()
-        # print(visited)
-    if len(visited[player.current_room.id]) > 0:
-        next_move = visited[player.current_room.id][0]
-        print(next_move)
-        player.travel(next_move)
-        traversal_path.append(next_move)
-        print(traversal_path)
-
-for i in range(len(world.rooms)):
-    visited[i] = {
-        'n' : '?',
-        's' : '?',
-        'w' : '?',
-        'e' : '?'
-    } 
-
-
-
-# for i in range(len(world.rooms)):
-#     exits = []
-#     for i in range(len(visited)):
-#         exits = player.current_room.get_exits()
-#         # print(exits)
-
-
-#         for i in range(len(exits)):
-#             if exits[i] == 'n':
-#                 visited[player.current_room.id]['n'] = exits[i]
-#             if exits[i] == 's':
-#                 visited[player.current_room.id]['s'] = exits[i]
-#             if exits[i] == 'w':
-#                 visited[player.current_room.id]['e'] = exits[i]
-#             if exits[i] == 'e':
-#                 visited[player.current_room.id]['w'] = exits[i]
-#         player.travel(move)
-
-for i in range(len(world.rooms)):
-    player.current_room.get_exits()
-
-exits = []
-for i in range(len(visited)):
-    exits = player.current_room.get_exits()
-    # print(exits)
-
-
-    for i in range(len(exits)):
-        if exits[i] == 'n':
-            visited[player.current_room.id]['n'] = exits[i]
-        if exits[i] == 's':
-            visited[player.current_room.id]['s'] = exits[i]
-        if exits[i] == 'w':
-            visited[player.current_room.id]['e'] = exits[i]
-        if exits[i] == 'e':
-            visited[player.current_room.id]['w'] = exits[i]
-    
-
-print(visited)
         
+        visited[id] = {}
+        edges = player.current_room.get_exits()
+        # print(f'edges:{edges}')
+        for i in range(len(edges)):
+            visited[id][edges[i]] = '?'
+            visited[id][edges[i]] = edges[i]
+    if len(visited[id]) > 0:
+        # print(visited[id])
+        next_move = player.current_room.get_exits()[0]
+        if next_move != None:
+            # print(f'next_move:{next_move}')
+            player.travel(next_move)
+            traversal_path.append(next_move)
+
+
+print(f'traversal_path:{traversal_path}')
+print(f'visited: {visited}')
+
+
+
+
+
+
+
+
 
 
 
